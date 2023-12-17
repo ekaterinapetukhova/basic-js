@@ -37,13 +37,13 @@ const chainMaker = {
     this.arr.splice(position - 1, 1);
     
     return this;
-
   },
 
   reverseChain() {
     this.arr.reverse();
     return this;
   },
+  
   finishChain() {
     const x = this.arr.join('~~');
     this.arr = [];
