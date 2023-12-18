@@ -67,7 +67,7 @@ class VigenereCipheringMachine {
     let result = '';
 
       for (let i = 0, j = 0; i < message.length; i += 1) {
-        const char  = message[i].toUpperCase();
+        const char = message[i].toUpperCase();
         const keyChar = key[j].toUpperCase();
         let index;
 
@@ -75,10 +75,10 @@ class VigenereCipheringMachine {
           if (alph.indexOf(char) - alph.indexOf(keyChar) < 0) {
             index = alph.indexOf(char) - alph.indexOf(keyChar) + 26;
           } else {
-            index = (alph.indexOf(char) - alph.indexOf(keyChar));
+            index = alph.indexOf(char) - alph.indexOf(keyChar);
           }
-            result += alph[index];
-            j = ++j % key.length;
+          result += alph[index];
+          j = ++j % key.length;
         } else {
           result += char;
         }
