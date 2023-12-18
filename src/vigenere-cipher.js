@@ -20,14 +20,80 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor (value) {
+    this.value = value;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+    if (arguments.length < 2 || [...arguments].some(item => !item)) {
+      throw new Error('Incorrect arguments!');
+    }
+
+    const alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    let result = '';
+
+    for (let i = 0, j = 0; i < message.length; i += 1) {
+        const char  = message[i].toUpperCase();
+        const keyChar = key[j].toUpperCase();
+        let index;
+
+        if (isLatin(char)) {
+          if (alph.indexOf(char) + alph.indexOf(keyChar) < 26) {
+            index = alph.indexOf(char) + alph.indexOf(keyChar)
+          } else {
+            index = (alph.indexOf(char) + alph.indexOf(keyChar)) % 26;
+          }
+            result += alph[index];
+            j = ++j % key.length;
+        } else {
+          result += char;
+        }
+      }
+
+      if (this.value === undefined || this.value === true) {
+        return result;
+      } else if (this.value === false) {
+        return result.split('').reverse().join('');
+      }
   }
+
+  decrypt(message, key) {
+    if (arguments.length < 2 || [...arguments].some(item => !item)) {
+      throw new Error('Incorrect arguments!');
+    }
+
+    const alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = '';
+
+      for (let i = 0, j = 0; i < message.length; i += 1) {
+        const char  = message[i].toUpperCase();
+        const keyChar = key[j].toUpperCase();
+        let index;
+
+        if (isLatin(char)) {
+          if (alph.indexOf(char) - alph.indexOf(keyChar) < 0) {
+            index = alph.indexOf(char) - alph.indexOf(keyChar) + 26;
+          } else {
+            index = (alph.indexOf(char) - alph.indexOf(keyChar));
+          }
+            result += alph[index];
+            j = ++j % key.length;
+        } else {
+          result += char;
+        }
+      }
+
+      if (this.value === undefined || this.value === true) {
+        return result;
+      } else if (this.value === false) {
+        return result.split("").reverse().join("");
+      }
+  }
+}
+
+function isLatin(str) {
+  return /[a-zA-Z]/gi.test(str);
 }
 
 module.exports = {
