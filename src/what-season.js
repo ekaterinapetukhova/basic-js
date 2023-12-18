@@ -15,11 +15,7 @@ function getSeason(date) {
   if (arguments.length === 0) {
     return 'Unable to determine the time of year!'
   };
-
-  if (!(date instanceof Date)) {
-    throw new Error('Invalid date!');
-  };
-
+  
   try { 
     let time = date.getMonth();
     date.setTime();
